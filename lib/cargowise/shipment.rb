@@ -28,5 +28,48 @@ module Cargowise
       @consignee_name = text_value("./Consignee/OrganisationDetails/Name")
     end
 
+    # find all shipments with a ShipmentNumber that matches ref
+    #
+    def self.find_by_shipment_number(company_code, username, pass, ref)
+      filter_hash = {
+        "tns:Filter" => {
+          "tns:Number" => {
+            "tns:NumberSearchField" => "ShipmentNumber",
+            "tns:NumberValue" => ref
+          }
+        }
+      }
+      ShipmentsClient.get_shipments_list(company_code, username, pass, filter_hash)
+    end
+
+    # find all shipments that haven't been delivered yet.
+    #
+    # This times out on some systems, possibly because the logistics company
+    # isn't correctly marking shipments as delivered, so the result is too
+    # large to transfer in a timely manner.
+    #
+    def self.find_undelivered(company_code, username, pass)
+      filter_hash = {
+        "tns:Filter" => { "tns:Status" => "Undelivered" }
+        }
+      ShipmentsClient.get_shipments_list(company_code, username, pass, filter_hash)
+    end
+
+    # find all shipments that had some activity in the past seven days. This could
+    # include leaving port, being delivered or passing a milestone.
+    #
+    def self.find_with_recent_activity(company_code, username, pass)
+      filter_hash = {
+        "tns:Filter" => {
+          "tns:Date" => {
+            "tns:DateSearchField" => "ALL",
+            "tns:FromDate" => (Date.today - 14).strftime("%Y-%m-%d"),
+            "tns:ToDate" => (Date.today + 14).strftime("%Y-%m-%d")
+          }
+        }
+      }
+      ShipmentsClient.get_shipments_list(company_code, username, pass, filter_hash)
+    end
+
   end
 end

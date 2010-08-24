@@ -27,6 +27,27 @@ module Cargowise
 
       @supplier_name = text_value("./OrderDetail/Supplier/OrganisationDetails/Name")
     end
+
+    # find all shipments with a ShipmentNumber that matches ref
+    #
+    def self.find_by_order_number(company_code, username, pass, ref)
+      filter_hash = {
+        "tns:Filter" => {
+          "tns:Number" => {
+            "tns:NumberSearchField" => "OrderNumber",
+            "tns:NumberValue" => ref
+          }
+        }
+      }
+      OrdersClient.get_order_list(company_code, username, pass, filter_hash)
+    end
+
+    def self.find_incomplete(company_code, username, pass)
+      filter_hash = {
+        "tns:Filter" => { "tns:OrderStatus" => "INC" }
+        }
+      OrdersClient.get_order_list(company_code, username, pass, filter_hash)
+    end
   end
 
 end
