@@ -4,6 +4,7 @@ module Cargowise
   class Shipment < AbstractResult
 
     attr_reader :number, :housebill, :goods_description, :service_level
+    attr_reader :origin, :destination
 
     attr_reader :shipper_name
 
@@ -16,6 +17,11 @@ module Cargowise
       @housebill = text_value("./HouseBill")
       @goods_description = text_value("./GoodsDescription")
       @service_level = text_value("./ServiceLevel")
+      @origin        = text_value("./Origin")
+      @destination   = text_value("./Destination")
+      @etd           = time_value("./ETD")
+      @eta           = time_value("./ETA")
+      @delivered_date = time_value("./DeliveredDate")
 
       @shipper_name = text_value("./Shipper/OrganisationDetails/Name")
 
