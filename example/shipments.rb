@@ -5,7 +5,7 @@ require 'cargowise'
 
 ccode, username, password = *ARGV
 
-shipments = Cargowise::ShipmentsClient.get_shipments_list(ccode, username, password)
+shipments = Cargowise::Shipment.find_with_recent_activity(ccode, username, password)
 
 shipments.each do |ship|
   puts ship.inspect
