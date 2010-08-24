@@ -2,7 +2,7 @@
 
 module Cargowise
 
-  # A shipment that is currently on its way to you. Could take on a 
+  # A shipment that is currently on its way to you. Could take on a
   # variety of forms - carton, palet, truck? Could be travelling via
   # air, sea, road, rail, donkey?
   #
@@ -28,6 +28,8 @@ module Cargowise
 
     attr_reader :consignee_name
 
+    attr_reader :documents
+
     def initialize(node)
       @node = node
 
@@ -44,6 +46,12 @@ module Cargowise
       @shipper_name = text_value("./Shipper/OrganisationDetails/Name")
 
       @consignee_name = text_value("./Consignee/OrganisationDetails/Name")
+
+      @documents = node_array("./DocumentLinks/DocumentLink").map { |node|
+        Document.new(node)
+      }.sort_by { |doc|
+        doc.date
+      }
     end
 
     # find all shipments with a ShipmentNumber that matches ref

@@ -25,6 +25,11 @@ module Cargowise
       instance_variables.select { |var| var != "@node"}
     end
 
+    def node_array(path)
+      path = path.gsub("/","/tns:")
+      node.xpath("#{path}", "tns" => Cargowise::DEFAULT_NS)
+    end
+
     def text_value(path)
       path = path.gsub("/","/tns:")
       node.xpath("#{path}/text()", "tns" => Cargowise::DEFAULT_NS).to_s
