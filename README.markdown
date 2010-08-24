@@ -76,7 +76,7 @@ IJS global has a webtracking site at:
 
 Their two API endpoints are:
 
-* http://visibility.ijsglobal.com/Tracker/WebService/SHipmentService.asmx
+* http://visibility.ijsglobal.com/Tracker/WebService/ShipmentService.asmx
 * http://visibility.ijsglobal.com/Tracker/WebService/OrderService.asmx
 
 ## Links
