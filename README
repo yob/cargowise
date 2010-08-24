@@ -1,0 +1,24 @@
+h2. Overview
+
+EnterpriseEDI is a commercial shipping and logistics software package by
+Cargowise. This library is for customers of companies using EnterpriseEDI
+to access shipping details via their API.
+
+I am in no way personally affiliated with Cargowise or companies that use
+EnterpriseEDI. This library was put together for a project that needed 
+access to specific details of upcoming shipments.
+
+h2. Installation
+
+  gem install cargowise
+
+h2. Usage
+
+  Cargowise::Order.by_order_number("123456").first
+  Cargowise::Order.by_order_number("123456").all
+  Cargowise::Shipment.by_shipment_number("123456").first
+  Cargowise::Shipment.by_shipment_number("123456").all
+
+h2. Links
+
+- Cargowise: http://www.cargowise.com/
