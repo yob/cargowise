@@ -2,7 +2,6 @@
 
 require "bigdecimal"
 require "handsoap"
-require "andand"
 
 module Cargowise
   ORDER_ENDPOINT = {
