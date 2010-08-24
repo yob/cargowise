@@ -19,6 +19,32 @@ h2. Usage
   Cargowise::Shipment.by_shipment_number("123456").first
   Cargowise::Shipment.by_shipment_number("123456").all
 
+h2. Finding API Endpoints
+
+Logistics companies that run EnterpriseEDI often don't realise they have an API
+so tracking down information on how to set it up can be tricky.
+
+If they have a website for tracking you can start with that URL and then guess
+the rest.
+
+For example, OHLs web tracking site is at:
+
+    https://webtracking.ohl.com/
+
+Their two API endpoints are therefore:
+
+    https://webtracking.ohl.com/WebService/ShipmentService.asmx
+    https://webtracking.ohl.com/WebService/OrderService.asmx
+
+IJS global has a webtracking site at:
+
+    http://visibility.ijsglobal.com/
+
+Their two API endpoints are:
+
+    http://visibility.ijsglobal.com/Tracker/WebService/SHipmentService.asmx
+    http://visibility.ijsglobal.com/Tracker/WebService/OrderService.asmx
+
 h2. Links
 
 - Cargowise: http://www.cargowise.com/
