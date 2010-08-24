@@ -22,7 +22,7 @@ module Cargowise
   class Shipment < AbstractResult
 
     attr_reader :number, :housebill, :goods_description, :service_level
-    attr_reader :origin, :destination
+    attr_reader :origin, :destination, :etd, :eta, :delivered_date
 
     attr_reader :shipper_name
 
