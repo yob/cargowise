@@ -44,6 +44,10 @@ module Cargowise
       @buyer_name   = text_value("./OrderDetail/Buyer/OrganisationDetails/Name")
 
       @supplier_name = text_value("./OrderDetail/Supplier/OrganisationDetails/Name")
+
+      @shipments = node_array("./Shipment").map { |node|
+        Shipment.new(node)
+      }
     end
 
     # find all shipments with a ShipmentNumber that matches ref
