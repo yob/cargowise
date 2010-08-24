@@ -1,7 +1,13 @@
 # coding: utf-8
 
 module Cargowise
-  class AbstractClient < Handsoap::Service
+
+  # Superclass of all clients, currently we have clients for
+  # orders and Shipments.
+  #
+  # Not much to see here, just common methods
+  #
+  class AbstractClient < Handsoap::Service # :nodoc:
     def on_create_document(doc)
       doc.alias 'tns', Cargowise::DEFAULT_NS
     end

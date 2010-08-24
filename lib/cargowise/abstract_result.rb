@@ -1,7 +1,12 @@
 # coding: utf-8
 
 module Cargowise
-  class AbstractResult
+
+  # Superclass of all objects built to contain results from
+  # the API. Not much to see here, mostly common helper methods
+  # for parsing values out of the XML response.
+  #
+  class AbstractResult # :nodoc:
 
     def inspect
       str = "<#{self.class}: "

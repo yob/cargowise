@@ -1,7 +1,11 @@
 # coding: utf-8
 
 module Cargowise
-  class ShipmentsClient < AbstractClient
+
+  # SOAP client for retreiving shipment data. Not much to
+  # see here, used by the Shipment resource class.
+  #
+  class ShipmentsClient < AbstractClient # :nodoc:
     endpoint Cargowise::SHIPMENT_ENDPOINT
 
     # return an array of shipments. Each shipment should correspond to

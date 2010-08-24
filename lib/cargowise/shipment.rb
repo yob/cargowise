@@ -1,6 +1,24 @@
 # coding: utf-8
 
 module Cargowise
+
+  # A shipment that is currently on its way to you. Could take on a 
+  # variety of forms - carton, palet, truck? Could be travelling via
+  # air, sea, road, rail, donkey?
+  #
+  # Typcially you will lookup the status of a shipment you're aware of
+  # using the shipment number:
+  #
+  #     Shipment.find_by_shipment_number(...)
+  #
+  # If you want all recent shipments (delivered and undelivered) to
+  # ensure you know what's coming:
+  #
+  #     Shipment.find_with_recent_activity(...)
+  #
+  # All shipment objects are read-only, see the object attributes to see
+  # what information is available.
+  #
   class Shipment < AbstractResult
 
     attr_reader :number, :housebill, :goods_description, :service_level

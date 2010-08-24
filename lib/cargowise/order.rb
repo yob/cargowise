@@ -1,6 +1,24 @@
 # coding: utf-8
 
 module Cargowise
+
+  # A purchase order that is being shipped to from a supplier to
+  # you via a logistics company.
+  #
+  # Typcially you will setup an arrangement with your account manager
+  # where they are sent copies of POs so they can be entered into the
+  # database and tracked.
+  #
+  # All order objects are read-only, see the object attributes to see
+  # what information is available.
+  #
+  # Use class find methods to retrieve order info from your logistics
+  # company.
+  #
+  #     Order.find_by_order_number(...)
+  #     Order.find_incomplete(...)
+  #     etc
+  #
   class Order < AbstractResult
 
     attr_reader :order_number, :order_status, :description, :datetime
