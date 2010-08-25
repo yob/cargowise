@@ -6,7 +6,6 @@ module Cargowise
   # see here, used by the Order resource class.
   #
   class OrdersClient < AbstractClient # :nodoc:
-    endpoint Cargowise::ORDER_ENDPOINT
 
     # return an array of orders. Each order *should* correspond to a buyer PO.
     #

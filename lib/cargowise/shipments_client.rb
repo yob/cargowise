@@ -6,7 +6,6 @@ module Cargowise
   # see here, used by the Shipment resource class.
   #
   class ShipmentsClient < AbstractClient # :nodoc:
-    endpoint Cargowise::SHIPMENT_ENDPOINT
 
     # return an array of shipments. Each shipment should correspond to
     # a consolidated shipment from the freight company.

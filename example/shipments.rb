@@ -1,13 +1,29 @@
+#****************************************************************
+# Sample script that retrieves shipment data from a logistics company.
+#
+# USAGE:
+#
+#   ruby example/shipments.rb http://example.com/Tracker/WebService/OrderService.asmx company_code username password
+#
+#****************************************************************
 
 $LOAD_PATH.unshift File.dirname(__FILE__) + '/../lib'
 
 require 'cargowise'
 
-ccode, username, password = *ARGV
+uri, ccode, username, password = *ARGV
 
-shipments = Cargowise::Shipment.find_with_recent_activity(ccode, username, password)
+Cargowise::Shipment.register(:ijs, :uri => uri,
+                                   :code => ccode,
+                                   :user => username,
+                                   :password => password)
 
-shipments.each do |ship|
+Cargowise::Shipment.via(:ijs).with_recent_activity.each do |ship|
+  puts ship.inspect
+  puts
+end
+
+Cargowise::Shipment.via(:ijs).by_shipment_number("12345").each do |ship|
   puts ship.inspect
   puts
 end

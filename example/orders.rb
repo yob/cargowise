@@ -1,13 +1,29 @@
+#****************************************************************
+# Sample script that retrieves order data from a logistics company.
+#
+# USAGE:
+#
+#   ruby example/orders.rb http://example.com/Tracker/WebService/OrderService.asmx company_code username password
+#
+#****************************************************************
 
 $LOAD_PATH.unshift File.dirname(__FILE__) + '/../lib'
 
 require 'cargowise'
 
-ccode, username, password = *ARGV
+uri, ccode, username, password = *ARGV
 
-orders = Cargowise::Order.find_by_order_number(ccode, username, password, "13/5/2010")
+Cargowise::Order.register(:ijs, :uri => uri,
+                                :code => ccode,
+                                :user => username,
+                                :password => password)
 
-orders.each do |ord|
+Cargowise::Order.via(:ijs).by_order_number("13/5/2010").each do |ord|
+  puts ord.inspect
+  puts
+end
+
+Cargowise::Order.via(:ijs).incomplete.each do |ord|
   puts ord.inspect
   puts
 end

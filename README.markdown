@@ -26,29 +26,43 @@ as it makes it's way from a supplier to you. For these to exist you probably nee
 have an arrangement with the logistics company to send them copies when you place
 the order.
 
+Start by registering at least one logistics company:
+
+    Cargowise::Order.register(:ijs, :uri  => "http://visibility.ijsglobal.com/Tracker/WebService/OrderService.asmx",
+                                    :code => "company_code",
+                                    :user => "user@example.com",
+                                    :password => "secret")
+
 To find all orders with a certain order number:
 
-    Cargowise::Order.find_by_order_number("123456")
+    Cargowise::Order.via(:ijs).by_order_number("123456")
 
 To find all incomplete orders:
 
-    Cargowise::Order.find_incomplete
+    Cargowise::Order.via(:ijs).incomplete
 
 Cargowise::Shipment represents something being sent to you - like a carton,
 palet or truck load. It might be transported via air, sea, road or a combination.
 
+Start by registering at least one logistics company:
+
+    Cargowise::Order.register(:ijs, :uri  => "http://visibility.ijsglobal.com/Tracker/WebService/ShipmentService.asmx",
+                                    :code => "company_code",
+                                    :user => "user@example.com",
+                                    :password => "secret")
+
 To find shipments by the shipment number (a reference number selected by your logistics
 company):
 
-    Cargowise::Shipment.find_by_shipment_number("123456")
+    Cargowise::Shipment.via(:ijs).by_shipment_number("123456")
 
 To find undelivered shipments:
 
-    Cargowise::Shipment.find_undelivered
+    Cargowise::Shipment.via(:ijs).undelivered
 
 To find shipments with activity in the past 14 days (or so):
 
-    Cargowise::Shipment.find_with_recent_activity
+    Cargowise::Shipment.via(:ijs).with_recent_activity
 
 All Order and Shipment objects are read only, there are no write capabale
 methods exposed via the API. If you see errors, contact your logistics company.

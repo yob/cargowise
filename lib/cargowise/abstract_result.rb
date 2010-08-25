@@ -8,6 +8,20 @@ module Cargowise
   #
   class AbstractResult # :nodoc:
 
+    def self.register(name, opts = {})
+      @endpoints ||= {}
+      @endpoints[name] = Endpoint.new(opts)
+    end
+
+    def self.via(name)
+      @endpoints ||= {}
+      raise ArgumentError, "#{name} is not recognised, have you registered it?" if @endpoints[name].nil?
+
+      klass_name = (self.name[/Cargowise::(.+)/,1] + "Search")
+      search_klass = Cargowise.const_get(klass_name)
+      search_klass.new(@endpoints[name])
+    end
+
     def inspect
       str = "<#{self.class}: "
       str << inspectable_vars.map { |v| "#{v.tr('@','')}: #{instance_variable_get(v)}" }.join(" ")
