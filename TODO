@@ -1,0 +1,2 @@
+* make filter methods chainable (like named_scopes)
+* make via() method optional if only 1 endpoint is registered
