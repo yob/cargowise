@@ -32,10 +32,10 @@ need to register the URI and authentication details for the company you want to 
                                     :user => "user@example.com",
                                     :password => "secret")
 
-    Cargowise::Order.register(:ijs, :uri  => "http://visibility.ijsglobal.com/Tracker/WebService/ShipmentService.asmx",
-                                    :code => "company_code",
-                                    :user => "user@example.com",
-                                    :password => "secret")
+    Cargowise::Shipment.register(:ijs, :uri  => "http://visibility.ijsglobal.com/Tracker/WebService/ShipmentService.asmx",
+                                       :code => "company_code",
+                                       :user => "user@example.com",
+                                       :password => "secret")
 
 In a rails app the registration should be done in a file like
 config/initializers/cargowise.rb.
