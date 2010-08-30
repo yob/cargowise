@@ -50,6 +50,10 @@ module Cargowise
       }
     end
 
+    def to_xml
+      @node.to_xml
+    end
+
   end
 
 end
