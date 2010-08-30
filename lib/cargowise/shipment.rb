@@ -28,7 +28,7 @@ module Cargowise
 
     attr_reader :consignee_name
 
-    attr_reader :documents
+    attr_reader :documents, :invoices
 
     def initialize(node)
       @node = node
@@ -51,6 +51,12 @@ module Cargowise
         Document.new(node)
       }.sort_by { |doc|
         doc.date
+      }
+
+      @invoices = node_array("./RelatedInvoiceLinks/InvoiceLink").map { |node|
+        Invoice.new(node)
+      }.sort_by { |inv|
+        inv.due_date
       }
     end
 
