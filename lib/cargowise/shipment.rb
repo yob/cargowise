@@ -81,10 +81,8 @@ module Cargowise
     #
     # 'via' is a symbol indicating which API endpoint to lookup.
     #
-    def full_orders(via)
-      @full_orders ||= @order_stubs.map { |ord|
-        Cargowise::Order.via(via).by_order_number(ord.order_number)
-      }.flatten.compact.uniq
+    def orders(via)
+      @orders ||= Cargowise::Order.via(via).by_shipment_number(self.number)
     end
 
   end
