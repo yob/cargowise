@@ -28,7 +28,7 @@ module Cargowise
 
     attr_reader :consignee_name
 
-    attr_reader :documents, :invoices
+    attr_reader :consols, :documents, :invoices
 
     def initialize(node)
       @node = node
@@ -46,6 +46,10 @@ module Cargowise
       @shipper_name = text_value("./Shipper/OrganisationDetails/Name")
 
       @consignee_name = text_value("./Consignee/OrganisationDetails/Name")
+
+      @consols = node_array("./Consols/Consol").map { |node|
+        Consol.new(node)
+      }
 
       @documents = node_array("./DocumentLinks/DocumentLink").map { |node|
         Document.new(node)
