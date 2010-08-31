@@ -23,6 +23,7 @@ module Cargowise
 
     attr_reader :order_number, :order_status, :description, :datetime
     attr_reader :order_total, :transport_mode, :container_mode
+    attr_reader :invoice_number
 
     attr_reader :buyer_name
 
@@ -34,6 +35,7 @@ module Cargowise
       @node = node
 
       @order_number = text_value("./OrderIdentifier/OrderNumber")
+      @invoice_number = text_value("./OrderDetail/InvoiceNumber")
       @order_status = text_value("./OrderDetail/OrderStatus")
       @description  = text_value("./OrderDetail/Description")
       @datetime     = time_value("./OrderDetail/OrderDateTime")
