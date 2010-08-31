@@ -64,8 +64,17 @@ module Cargowise
       }
     end
 
+    # returns the raw XML string this shipment is based on
+    #
     def to_xml
       @node.to_xml
+    end
+
+    # returns a space separated string with all transport modes being used
+    # to move this shipment
+    #
+    def transport_mode
+      @consols.map { |con| con.transport_mode }.uniq.sort.join(" ")
     end
 
   end
