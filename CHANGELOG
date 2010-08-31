@@ -1,3 +1,7 @@
+v0.7 - 21st August 2010
+* new attribute Shipment#consols
+* new attribute Order#invoice_number
+
 v0.6 - 31st August 2010
 * new methods Order#to_xml and Shipment#to_xml
 * new attribute Shipment#invoices
