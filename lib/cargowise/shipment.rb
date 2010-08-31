@@ -77,5 +77,15 @@ module Cargowise
       @consols.map { |con| con.transport_mode }.uniq.sort.join(" ")
     end
 
+    # lookup full Cargowise::Order objects for each order on this shipment.
+    #
+    # 'via' is a symbol indicating which API endpoint to lookup.
+    #
+    def full_orders(via)
+      @full_orders ||= @order_stubs.map { |ord|
+        Cargowise::Order.via(via).by_order_number(ord.order_number)
+      }.flatten.compact.uniq
+    end
+
   end
 end
