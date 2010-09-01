@@ -33,7 +33,7 @@ module Cargowise
       ShipmentsClient.get_shipments_list(ep.code, ep.user, ep.password, filter_hash)
     end
 
-    # find all shipments that had some activity in the past seven days. This could
+    # find all shipments that had some activity in the past fourteen days. This could
     # include leaving port, being delivered or passing a milestone.
     #
     def with_recent_activity
@@ -41,6 +41,22 @@ module Cargowise
         "tns:Filter" => {
           "tns:Date" => {
             "tns:DateSearchField" => "ALL",
+            "tns:FromDate" => (Date.today - 14).strftime("%Y-%m-%d"),
+            "tns:ToDate" => (Date.today + 14).strftime("%Y-%m-%d")
+          }
+        }
+      }
+      ShipmentsClient.endpoint(endpoint_hash) # probably not threadsafe. oops.
+      ShipmentsClient.get_shipments_list(ep.code, ep.user, ep.password, filter_hash)
+    end
+
+    # find all shipments that had were shipped in the past 14 days
+    #
+    def recently_shipped
+      filter_hash = {
+        "tns:Filter" => {
+          "tns:Date" => {
+            "tns:DateSearchField" => "ETD",
             "tns:FromDate" => (Date.today - 14).strftime("%Y-%m-%d"),
             "tns:ToDate" => (Date.today + 14).strftime("%Y-%m-%d")
           }
