@@ -50,7 +50,8 @@ module Cargowise
       ShipmentsClient.get_shipments_list(ep.code, ep.user, ep.password, filter_hash)
     end
 
-    # find all shipments that had were shipped in the past 14 days
+    # find all shipments that had were shipped in the past 14 days or will ship in
+    # the next 14 days
     #
     def recently_shipped
       filter_hash = {
