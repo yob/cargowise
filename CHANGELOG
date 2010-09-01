@@ -1,4 +1,4 @@
-v0.8 - 1st September 2010
+v0.7.1 - 1st September 2010
 * new Shipment search method - Shipment.via(blah).recently_shipped
 
 v0.7 - 31st August 2010
