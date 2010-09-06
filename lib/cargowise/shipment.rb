@@ -85,5 +85,21 @@ module Cargowise
       @orders ||= Cargowise::Order.via(via).by_shipment_number(self.number)
     end
 
+    # lookup related Cargowise::Shipment objects. These are usually "child" shipments
+    # grouped under a parent. Think a consolidated pallet (the parent) with cartons from
+    # multiple suppliers (the children).
+    #
+    # 'via' is a symbol indicating which API endpoint to lookup.
+    #
+    def related_shipments(via)
+      @related ||= @consols.map { |consol|
+        consol.master_bill
+      }.compact.map { |master_bill|
+        Cargowise::Shipment.via(via).by_masterbill_number(master_bill)
+      }.flatten.select { |shipment|
+        shipment.number != self.number
+      }.compact
+    end
+
   end
 end
