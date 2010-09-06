@@ -101,5 +101,34 @@ module Cargowise
       }.compact
     end
 
+    # if this shipment has an order ref associated with it, find it.
+    #
+    # This data isn't available via the API, so we need to screen scrape the
+    # website to get it.
+    #
+    def order_ref(via)
+      content = html_page(via)
+      #content[/word-wrap:break-word;">(.+)<\/span>/,1]
+    end
+
+    private
+
+    def html_page(via)
+      @html_page ||= begin
+        document = self.documents.first
+        document ||= related_shipments(via).detect { |ship|
+          ship.documents.size > 0
+        }.documents.first
+        base_uri = document.link[/(.+)AutoLoginRequest.+/,1]
+        login_uri = base_uri + "Login/Login.aspx"
+        client = HTTPClient.new
+        client.get(login_uri)
+        response = client.post(login_uri, :QuickViewNumber => self.number, :ViewShipmentBtn => "View")
+        shipment_uri = base_uri + response.header['Location'].to_s
+        response = client.get(shipment_uri)
+        response.content
+      end
+    end
+
   end
 end
