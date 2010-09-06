@@ -1,3 +1,7 @@
+v0.7.2 - 7th September 2010
+* new Shipment search method - Shipment.via(blah).by_masterbill_number
+* new Shipment method - Shipment.#related_shipments
+
 v0.7.1 - 1st September 2010
 * new Shipment search method - Shipment.via(blah).recently_shipped
 
