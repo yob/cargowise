@@ -4,19 +4,16 @@ module Cargowise
 
   class ShipmentSearch < AbstractSearch
 
+    # find all shipments with a MasterBillNumber that matches ref
+    #
+    def by_masterbill_number(ref)
+      by_number("MasterBillNumber", ref)
+    end
+
     # find all shipments with a ShipmentNumber that matches ref
     #
     def by_shipment_number(ref)
-      filter_hash = {
-        "tns:Filter" => {
-          "tns:Number" => {
-            "tns:NumberSearchField" => "ShipmentNumber",
-            "tns:NumberValue" => ref
-          }
-        }
-      }
-      ShipmentsClient.endpoint(endpoint_hash) # probably not threadsafe. oops.
-      ShipmentsClient.get_shipments_list(ep.code, ep.user, ep.password, filter_hash)
+      by_number("ShipmentNumber", ref)
     end
 
     # find all shipments that haven't been delivered yet.
@@ -67,6 +64,20 @@ module Cargowise
       ShipmentsClient.get_shipments_list(ep.code, ep.user, ep.password, filter_hash)
     end
 
+    private
+
+    def by_number(field, ref)
+      filter_hash = {
+        "tns:Filter" => {
+          "tns:Number" => {
+            "tns:NumberSearchField" => field,
+            "tns:NumberValue" => ref
+          }
+        }
+      }
+      ShipmentsClient.endpoint(endpoint_hash) # probably not threadsafe. oops.
+      ShipmentsClient.get_shipments_list(ep.code, ep.user, ep.password, filter_hash)
+    end
 
   end
 end
