@@ -15,7 +15,7 @@ module Cargowise
     def initialize(node)
       @node = node
 
-      @master         = text_value("./MasterBill")
+      @master_bill    = text_value("./MasterBill")
       @console_mode   = text_value("./ConsolMode")
       @transport_mode = text_value("./TransportMode")
       @vessel_name    = text_value("./VesselName")
