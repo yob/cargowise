@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name              = "cargowise"
-  s.version           = "0.7.2"
+  s.version           = "0.8"
   s.summary           = "Wrapper around entpriseEDI SOAP API by cargowise"
   s.description       = "Retrieve tracking and status information on your shipments from entpriseEDI"
   s.author            = "James Healy"
