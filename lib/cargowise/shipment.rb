@@ -107,28 +107,38 @@ module Cargowise
     # website to get it.
     #
     def order_ref(via)
-      content = html_page(via)
-      #content[/word-wrap:break-word;">(.+)<\/span>/,1]
+      if tracker_login_uri(via)
+        @order_ref ||= html_page(via).search(".//span[@id='Ztextlabel1']/text()").to_s.strip || ""
+      else
+        nil
+      end
     end
 
     private
 
+    # retrieve a Mechanize::Page object that containts info on this shipment
+    #
     def html_page(via)
+      return nil unless tracker_login_uri(via)
+
       @html_page ||= begin
-        document = self.documents.first
-        document ||= related_shipments(via).detect { |ship|
-          ship.documents.size > 0
-        }.documents.first
-        base_uri = document.link[/(.+)AutoLoginRequest.+/,1]
-        login_uri = base_uri + "Login/Login.aspx"
-        client = HTTPClient.new
-        client.get(login_uri)
-        response = client.post(login_uri, :QuickViewNumber => self.number, :ViewShipmentBtn => "View")
-        shipment_uri = base_uri + response.header['Location'].to_s
-        response = client.get(shipment_uri)
-        response.content
+        base_uri = tracker_login_uri(via)
+        login_uri = base_uri + "/Login/Login.aspx"
+        agent = Mechanize.new
+        page  = agent.get(login_uri)
+        form  = page.forms.first
+        input_name = form.fields.detect { |field| field.name.to_s.downcase.include?("number")}.name
+        form.__send__("#{input_name}=", self.number) if input_name
+        form.add_field!("ViewShipmentBtn","View Shipment")
+        agent.submit(form)
       end
     end
 
+    # Find a shipment with documents attached so we can discover the
+    # web interface uri
+    #
+    def tracker_login_uri(via)
+      Shipment.endpoint(via).uri.to_s[/(.+)\/WebService.+/,1]
+    end
   end
 end

@@ -13,6 +13,11 @@ module Cargowise
       @endpoints[name] = Endpoint.new(opts)
     end
 
+    def self.endpoint(name)
+      @endpoints ||= {}
+      @endpoints[name] 
+    end
+
     def self.via(name)
       @endpoints ||= {}
       raise ArgumentError, "#{name} is not recognised, have you registered it?" if @endpoints[name].nil?

@@ -5,7 +5,7 @@ require "bigdecimal"
 require "handsoap"
 
 # gems
-require "httpclient"
+require 'mechanize'
 
 module Cargowise
   DEFAULT_NS = "http://www.edi.com.au/EnterpriseService/"
