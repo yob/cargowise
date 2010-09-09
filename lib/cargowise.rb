@@ -6,6 +6,7 @@ require "handsoap"
 
 # gems
 require 'mechanize'
+require 'andand'
 
 module Cargowise
   DEFAULT_NS = "http://www.edi.com.au/EnterpriseService/"

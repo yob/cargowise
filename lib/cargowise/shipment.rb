@@ -129,7 +129,7 @@ module Cargowise
         agent = Mechanize.new
         page  = agent.get(login_uri)
         form  = page.forms.first
-        input_name = form.fields.detect { |field| field.name.to_s.downcase.include?("number")}.name
+        input_name = form.fields.detect { |field| field.name.to_s.downcase.include?("number")}.andand.name
         form.__send__("#{input_name}=", self.number) if input_name
         form.add_field!("ViewShipmentBtn","View Shipment")
         agent.submit(form)
