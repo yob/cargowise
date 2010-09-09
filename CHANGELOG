@@ -1,5 +1,6 @@
 v0.8 - 9th September 2010
 * new Shipment method - Shipment#order_ref
+* new Shipment attribute - Shipment#client_reference
 
 v0.7.2 - 7th September 2010
 * new Shipment search method - Shipment.via(blah).by_masterbill_number
