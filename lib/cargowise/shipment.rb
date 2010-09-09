@@ -101,5 +101,44 @@ module Cargowise
       }.compact
     end
 
+    # if this shipment has an order ref associated with it, find it.
+    #
+    # This data isn't available via the API, so we need to screen scrape the
+    # website to get it.
+    #
+    def order_ref(via)
+      if tracker_login_uri(via)
+        @order_ref ||= html_page(via).search(".//span[@id='Ztextlabel1']/text()").to_s.strip || ""
+      else
+        nil
+      end
+    end
+
+    private
+
+    # retrieve a Mechanize::Page object that containts info on this shipment
+    #
+    def html_page(via)
+      return nil unless tracker_login_uri(via)
+
+      @html_page ||= begin
+        base_uri = tracker_login_uri(via)
+        login_uri = base_uri + "/Login/Login.aspx"
+        agent = Mechanize.new
+        page  = agent.get(login_uri)
+        form  = page.forms.first
+        input_name = form.fields.detect { |field| field.name.to_s.downcase.include?("number")}.name
+        form.__send__("#{input_name}=", self.number) if input_name
+        form.add_field!("ViewShipmentBtn","View Shipment")
+        agent.submit(form)
+      end
+    end
+
+    # Find a shipment with documents attached so we can discover the
+    # web interface uri
+    #
+    def tracker_login_uri(via)
+      Shipment.endpoint(via).uri.to_s[/(.+)\/WebService.+/,1]
+    end
   end
 end

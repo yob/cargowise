@@ -11,4 +11,5 @@ Gem::Specification.new do |s|
   s.files             = Dir.glob("lib/**/*.rb") + Dir.glob("examples/**/*.rb") + ["README.markdown", "CHANGELOG", "TODO", "COPYING", "LICENSE"]
   s.add_dependency("handsoap", "~>1.1.7")
   s.add_dependency("nokogiri", "~>1.4.0")
+  s.add_dependency("mechanize", "~>1.0")
 end
