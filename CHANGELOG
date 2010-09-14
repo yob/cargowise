@@ -1,3 +1,6 @@
+v0.8.1 - 15th September 2010
+* add explicit dependency on curb
+
 v0.8 - 9th September 2010
 * new Shipment method - Shipment#order_ref
 * new Shipment attribute - Shipment#client_reference
