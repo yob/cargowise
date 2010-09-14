@@ -1,3 +1,6 @@
+v0.8.2 - 15th September 2010
+* new Shipment attribute - packings
+
 v0.8.1 - 15th September 2010
 * add explicit dependency on curb
 
