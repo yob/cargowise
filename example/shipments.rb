@@ -18,12 +18,15 @@ Cargowise::Shipment.register(:ijs, :uri => uri,
                                    :user => username,
                                    :password => password)
 
-Cargowise::Shipment.via(:ijs).with_recent_activity.each do |ship|
-  puts ship.inspect
-  puts
-end
+#Cargowise::Shipment.via(:ijs).with_recent_activity.each do |ship|
+#  puts ship.inspect
+#  puts
+#end
 
-Cargowise::Shipment.via(:ijs).by_shipment_number("12345").each do |ship|
+Cargowise::Shipment.via(:ijs).by_shipment_number("SAAC00005301").each do |ship|
   puts ship.inspect
+  #puts ship.to_xml
+  puts ship.kg
+  puts ship.cubic_meters
   puts
 end

@@ -15,8 +15,8 @@ module Cargowise
 
       @pack_type   = text_value("./PackType")
       @line_price  = decimal_value("./LinePrice")
-      @weight      = decimal_value("./Weight")
-      @volume      = decimal_value("./Volume")
+      @weight      = kg_value("./Weight")
+      @volume      = cubic_value("./Volume")
       @description = text_value("./Description")
     end
   end

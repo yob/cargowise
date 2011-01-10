@@ -15,7 +15,7 @@ module Cargowise
 
     def self.endpoint(name)
       @endpoints ||= {}
-      @endpoints[name] 
+      @endpoints[name]
     end
 
     def self.via(name)
@@ -54,6 +54,11 @@ module Cargowise
       node.xpath("#{path}/text()", "tns" => Cargowise::DEFAULT_NS).to_s
     end
 
+    def attribute_value(path)
+      path = path.gsub(/\/([^@])/u,'/tns:\1')
+      node.xpath(path, "tns" => Cargowise::DEFAULT_NS).to_s
+    end
+
     def time_value(path)
       val = text_value(path)
       val.nil? ? nil : DateTime.parse(val)
@@ -62,6 +67,38 @@ module Cargowise
     def decimal_value(path)
       val = text_value(path)
       val.nil? ? nil : BigDecimal.new(val)
+    end
+
+    # return a weight value in KG. Transparently handles the
+    # conversion from other units.
+    #
+    def kg_value(path)
+      val  = text_value(path)
+      type = attribute_value("#{path}/@DimensionType")
+
+      if type.to_s.downcase == "kg"
+        BigDecimal.new(val)
+      elsif type.to_s.downcase == "lbs"
+        BigDecimal.new(val) * BigDecimal.new("0.45359237")
+      else
+        nil
+      end
+    end
+
+    # return a cubic value in meters cubed. Transparently handles the
+    # conversion from other units.
+    #
+    def cubic_value(path)
+      val  = text_value(path)
+      type = attribute_value("#{path}/@DimensionType")
+
+      if type.to_s.downcase == "m3" # cubic metres
+        BigDecimal.new(val)
+      elsif type.to_s.downcase == "f3" # cubic feet
+        BigDecimal.new(val) * BigDecimal.new("0.0283168466")
+      else
+        nil
+      end
     end
   end
 end
