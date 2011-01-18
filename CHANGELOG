@@ -1,3 +1,6 @@
+v0.8.4 - 18th January 2010
+* fix transparent conversion of imperial units to metric
+
 v0.8.3 - 10th January 2011
 * transparently convert all measurements to metric
 

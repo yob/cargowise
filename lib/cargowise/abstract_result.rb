@@ -78,8 +78,9 @@ module Cargowise
 
       if type.to_s.downcase == "kg"
         BigDecimal.new(val)
-      elsif type.to_s.downcase == "lbs"
-        BigDecimal.new(val) * BigDecimal.new("0.45359237")
+      elsif type.to_s.downcase == "lb"
+        val = BigDecimal.new(val) * BigDecimal.new("0.45359237")
+        val.round(4)
       else
         nil
       end
@@ -94,8 +95,9 @@ module Cargowise
 
       if type.to_s.downcase == "m3" # cubic metres
         BigDecimal.new(val)
-      elsif type.to_s.downcase == "f3" # cubic feet
-        BigDecimal.new(val) * BigDecimal.new("0.0283168466")
+      elsif type.to_s.downcase == "cf" # cubic feet
+        val = BigDecimal.new(val) * BigDecimal.new("0.0283168466")
+        val.round(4)
       else
         nil
       end
