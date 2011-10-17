@@ -1,3 +1,6 @@
+v0.8.5 - 17th October 2011
+* relax nokogiri dependency to allow 1.4 and 1.5
+
 v0.8.4 - 18th January 2010
 * fix transparent conversion of imperial units to metric
 
