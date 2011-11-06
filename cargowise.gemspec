@@ -14,5 +14,5 @@ Gem::Specification.new do |s|
   s.add_dependency("andand")
   s.add_dependency("handsoap", "~>1.1.7")
   s.add_dependency("nokogiri", "~>1.4")
-  s.add_dependency("mechanize", "~>1.0")
+  s.add_dependency("mechanize", "~>2.0")
 end
