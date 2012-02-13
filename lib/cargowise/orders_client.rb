@@ -16,7 +16,7 @@ module Cargowise
     def get_order_list(company_code, username, pass, filter_hash)
       soap_action  = 'http://www.edi.com.au/EnterpriseService/GetOrderList'
       soap_headers = headers(company_code, username, pass)
-      response = invoke('tns:GetOrderList', :soap_action => soap_action, :soap_header => soap_headers, :soap_body => filter_hash, :http_options => cwkhttp_options)
+      response = invoke('tns:GetOrderList', :soap_action => soap_action, :soap_header => soap_headers, :soap_body => filter_hash, :http_options => cw_http_options)
       response.document.xpath("//tns:GetOrderListResult/tns:WebOrder", {"tns" => Cargowise::DEFAULT_NS}).map do |node|
         Cargowise::Order.new(node)
       end
