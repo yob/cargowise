@@ -15,9 +15,9 @@ module Cargowise
     # for samples
     #
     def get_shipments_list(company_code, username, pass, filter_hash)
-      soap_action = 'http://www.edi.com.au/EnterpriseService/GetShipmentsList'
+      soap_action  = 'http://www.edi.com.au/EnterpriseService/GetShipmentsList'
       soap_headers = headers(company_code, username, pass)
-      response = invoke('tns:GetShipmentsList', :soap_action => soap_action, :soap_header => soap_headers, :soap_body => filter_hash)
+      response     = invoke('tns:GetShipmentsList', :soap_action => soap_action, :soap_header => soap_headers, :soap_body => filter_hash, :http_options => cw_http_options)
       response.document.xpath("//tns:GetShipmentsListResult/tns:WebShipment", {"tns" => Cargowise::DEFAULT_NS}).map do |node|
         Cargowise::Shipment.new(node)
       end

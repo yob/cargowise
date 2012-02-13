@@ -10,6 +10,7 @@ require 'andand'
 
 module Cargowise
   DEFAULT_NS = "http://www.edi.com.au/EnterpriseService/"
+  CA_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt"
 end
 
 # this lib

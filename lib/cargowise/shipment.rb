@@ -134,6 +134,9 @@ module Cargowise
         base_uri = tracker_login_uri(via)
         login_uri = base_uri + "/Login/Login.aspx"
         agent = Mechanize.new
+        if File.file?(Cargowise::CA_CERT_FILE)
+          agent.agent.http.ca_file = CA_CERT_FILE
+        end
         page  = agent.get(login_uri)
         form  = page.forms.first
         input_name = form.fields.detect { |field| field.name.to_s.downcase.include?("number")}.andand.name

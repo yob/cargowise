@@ -22,11 +22,19 @@ module Cargowise
     def hello(company_code, username, pass)
       soap_action  = 'http://www.edi.com.au/EnterpriseService/Hello'
       soap_headers = headers(company_code, username, pass)
-      response = invoke('tns:Hello', :soap_action => soap_action, :soap_header => soap_headers)
+      response     = invoke('tns:Hello', :soap_action => soap_action, :soap_header => soap_headers, :http_options => cw_http_options)
       response.document.xpath("//tns:HelloResponse/tns:HelloResult/text()", {"tns" => Cargowise::DEFAULT_NS}).to_s
     end
 
     private
+
+    def cw_http_options
+      if File.file?(Cargowise::CA_CERT_FILE)
+        {:trust_ca_file => Cargowise::CA_CERT_FILE}
+      else
+        {}
+      end
+    end
 
     def headers(company_code, username, pass)
       {
