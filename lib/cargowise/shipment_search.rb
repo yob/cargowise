@@ -2,7 +2,11 @@
 
 module Cargowise
 
-  class ShipmentSearch < AbstractSearch
+  class ShipmentSearch
+
+    def initialize(savon_client)
+      @savon_client = savon_client
+    end
 
     # find all shipments with a MasterBillNumber that matches ref
     #
@@ -26,7 +30,7 @@ module Cargowise
       filter_hash = {
         "tns:Filter" => { "tns:Status" => "Undelivered" }
         }
-      ShipmentsClient.new.get_shipments_list(ep.uri, ep.code, ep.user, ep.password, filter_hash)
+      get_shipments_list(filter_hash)
     end
 
     # find all shipments that had some activity in the past fourteen days. This could
@@ -42,7 +46,7 @@ module Cargowise
           }
         }
       }
-      ShipmentsClient.new.get_shipments_list(ep.uri, ep.code, ep.user, ep.password, filter_hash)
+      get_shipments_list(filter_hash)
     end
 
     # find all shipments that had were shipped in the past 14 days or will ship in
@@ -58,7 +62,7 @@ module Cargowise
           }
         }
       }
-      ShipmentsClient.new.get_shipments_list(ep.uri, ep.code, ep.user, ep.password, filter_hash)
+      get_shipments_list(filter_hash)
     end
 
     private
@@ -72,7 +76,21 @@ module Cargowise
           }
         }
       }
-      ShipmentsClient.new.get_shipments_list(ep.uri, ep.code, ep.user, ep.password, filter_hash)
+      get_shipments_list(filter_hash)
+    end
+
+    # return an array of shipments. Each shipment should correspond to
+    # a consolidated shipment from the freight company.
+    #
+    # filter_hash should be a hash that will be serialised into an
+    # XML fragment specifying the search criteria. See the WSDL documentation
+    # for samples
+    #
+    def get_shipments_list(filter_hash)
+      response = @savon_client.call(:get_shipments_list, message: filter_hash)
+      response.xpath("//tns:GetShipmentsListResult/tns:WebShipment", {"tns" => Cargowise::DEFAULT_NS}).map do |node|
+        Cargowise::Shipment.new(node)
+      end
     end
 
   end

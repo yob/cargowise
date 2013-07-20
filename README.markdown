@@ -29,8 +29,8 @@ need to register the URI and authentication details for the company you want to 
 
     client = Cargowise::Client.new(:order_uri => "http://visibility.ijsglobal.com/Tracker/WebService/OrderService.asmx",
                                    :shipment_uri => "http://visibility.ijsglobal.com/Tracker/WebService/ShipmentService.asmx",
-                                   :code => "company_code",
-                                   :user => "user@example.com",
+                                   :company_code => "company_code",
+                                   :username => "user@example.com",
                                    :password => "secret")
 
 In a rails app the registration should be done in a file like

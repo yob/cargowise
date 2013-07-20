@@ -2,7 +2,11 @@
 
 module Cargowise
 
-  class OrderSearch < AbstractSearch
+  class OrderSearch
+
+    def initialize(savon_client)
+      @savon_client = savon_client
+    end
 
     # find all orders with an OrderNumber that matches ref
     #
@@ -15,7 +19,7 @@ module Cargowise
           }
         }
       }
-      OrdersClient.new.get_order_list(ep.uri, ep.code, ep.user, ep.password, filter_hash)
+      get_order_list(filter_hash)
     end
 
     # find all orders with a ShipmentNumber that matches ref
@@ -29,7 +33,7 @@ module Cargowise
           }
         }
       }
-      OrdersClient.new.get_order_list(ep.uri, ep.code, ep.user, ep.password, filter_hash)
+      get_order_list(filter_hash)
     end
 
     # find all orders still marked as incomplete.
@@ -38,7 +42,22 @@ module Cargowise
       filter_hash = {
         "tns:Filter" => { "tns:OrderStatus" => "INC" }
         }
-      OrdersClient.new.get_order_list(ep.uri, ep.code, ep.user, ep.password, filter_hash)
+      get_order_list(filter_hash)
+    end
+
+    private
+
+    # return an array of orders. Each order *should* correspond to a buyer PO.
+    #
+    # filter_hash should be a hash that will be serialised into an
+    # XML fragment specifying the search criteria. See the WSDL documentation
+    # for samples
+    #
+    def get_order_list(filter_hash)
+      response = @savon_client.call(:get_order_list, message: filter_hash)
+      response.xpath("//tns:GetOrderListResult/tns:WebOrder", {"tns" => Cargowise::DEFAULT_NS}).map do |node|
+        Cargowise::Order.new(node)
+      end
     end
 
   end
