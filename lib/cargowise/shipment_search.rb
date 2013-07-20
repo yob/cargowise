@@ -26,8 +26,7 @@ module Cargowise
       filter_hash = {
         "tns:Filter" => { "tns:Status" => "Undelivered" }
         }
-      ShipmentsClient.endpoint(endpoint_hash) # probably not threadsafe. oops.
-      ShipmentsClient.get_shipments_list(ep.code, ep.user, ep.password, filter_hash)
+      ShipmentsClient.new.get_shipments_list(ep.uri, ep.code, ep.user, ep.password, filter_hash)
     end
 
     # find all shipments that had some activity in the past fourteen days. This could
@@ -43,8 +42,7 @@ module Cargowise
           }
         }
       }
-      ShipmentsClient.endpoint(endpoint_hash) # probably not threadsafe. oops.
-      ShipmentsClient.get_shipments_list(ep.code, ep.user, ep.password, filter_hash)
+      ShipmentsClient.new.get_shipments_list(ep.uri, ep.code, ep.user, ep.password, filter_hash)
     end
 
     # find all shipments that had were shipped in the past 14 days or will ship in
@@ -60,8 +58,7 @@ module Cargowise
           }
         }
       }
-      ShipmentsClient.endpoint(endpoint_hash) # probably not threadsafe. oops.
-      ShipmentsClient.get_shipments_list(ep.code, ep.user, ep.password, filter_hash)
+      ShipmentsClient.new.get_shipments_list(er.uri, ep.code, ep.user, ep.password, filter_hash)
     end
 
     private
@@ -75,8 +72,7 @@ module Cargowise
           }
         }
       }
-      ShipmentsClient.endpoint(endpoint_hash) # probably not threadsafe. oops.
-      ShipmentsClient.get_shipments_list(ep.code, ep.user, ep.password, filter_hash)
+      ShipmentsClient.new.get_shipments_list(ep.uri, ep.code, ep.user, ep.password, filter_hash)
     end
 
   end

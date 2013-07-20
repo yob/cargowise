@@ -14,9 +14,10 @@ module Cargowise
     # XML fragment specifying the search criteria. See the WSDL documentation
     # for samples
     #
-    def get_shipments_list(company_code, username, pass, filter_hash)
+    def get_shipments_list(endpoint_uri, company_code, username, pass, filter_hash)
+      client = build_client(endpoint_uri, company_code, username, pass)
       response = client.call(:get_shipments_list, message: filter_hash)
-      response.document.xpath("//tns:GetShipmentsListResult/tns:WebShipment", {"tns" => Cargowise::DEFAULT_NS}).map do |node|
+      response.xpath("//tns:GetShipmentsListResult/tns:WebShipment", {"tns" => Cargowise::DEFAULT_NS}).map do |node|
         Cargowise::Shipment.new(node)
       end
     end
@@ -30,10 +31,10 @@ module Cargowise
       )
     end
 
-    def client(company_code, username, password)
+    def build_client(endpoint_uri, company_code, username, password)
       Savon.client(
         wsdl: wsdl_path,
-        endpoint: "https://webtracking.ohl.com/WebService/ShipmentService.asmx",
+        endpoint: endpoint_uri,
 
         read_timeout: 120,
         ssl_version: :TLSv1,
@@ -47,5 +48,6 @@ module Cargowise
           }
         }
       )
+    end
   end
 end
