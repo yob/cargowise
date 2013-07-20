@@ -5,7 +5,7 @@ module Cargowise
   # SOAP client for retreiving shipment data. Not much to
   # see here, used by the Shipment resource class.
   #
-  class ShipmentsClient # < AbstractClient # :nodoc:
+  class ShipmentsClient
 
     # return an array of shipments. Each shipment should correspond to
     # a consolidated shipment from the freight company.
