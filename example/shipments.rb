@@ -18,10 +18,10 @@ client = Cargowise::Client.new(:shipment_uri => uri,
                                :username => username,
                                :password => password)
 
-client.shipments.with_recent_activity.each do |ship|
-  puts ship.inspect
-  puts
-end
+#client.shipments.with_recent_activity.each do |ship|
+#  puts ship.inspect
+#  puts
+#end
 
 client.shipments.by_shipment_number("SORD30059237").each do |ship|
   puts ship.inspect
