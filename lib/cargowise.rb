@@ -23,7 +23,6 @@ require 'cargowise/packing'
 require 'cargowise/consol'
 require 'cargowise/document'
 require 'cargowise/invoice'
-require 'cargowise/endpoint'
 require 'cargowise/order_search'
 require 'cargowise/shipment_search'
 
