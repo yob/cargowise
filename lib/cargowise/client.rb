@@ -68,6 +68,9 @@ module Cargowise
       )
     end
 
+    # TODO: make some of these configurable via the initialize to Cargowise::Client. Will enable
+    #       providers that need special treatment to work (like OHL) to be configured differently
+    #       by the calling code
     def build_client(wsdl_path, endpoint_uri)
       Savon.client(
         wsdl: wsdl_path,
