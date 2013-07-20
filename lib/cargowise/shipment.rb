@@ -134,6 +134,7 @@ module Cargowise
         base_uri = tracker_login_uri(via)
         login_uri = base_uri + "/Login/Login.aspx"
         agent = Mechanize.new
+        agent.agent.http.ssl_version = :TLSv1
         if File.file?(Cargowise::CA_CERT_FILE)
           agent.agent.http.ca_file = CA_CERT_FILE
         end
