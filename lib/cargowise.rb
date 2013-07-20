@@ -2,7 +2,6 @@
 
 # stdlib
 require "bigdecimal"
-require "handsoap"
 
 # gems
 require 'mechanize'
