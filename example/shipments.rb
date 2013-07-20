@@ -13,17 +13,17 @@ require 'cargowise'
 
 uri, ccode, username, password = *ARGV
 
-Cargowise::Shipment.register(:ijs, :uri => uri,
-                                   :code => ccode,
-                                   :user => username,
-                                   :password => password)
+client = Cargowise::Client.new(:shipment_uri => uri,
+                               :company_code => ccode,
+                               :username => username,
+                               :password => password)
 
-#Cargowise::Shipment.via(:ijs).with_recent_activity.each do |ship|
-#  puts ship.inspect
-#  puts
-#end
+client.shipments.with_recent_activity.each do |ship|
+  puts ship.inspect
+  puts
+end
 
-Cargowise::Shipment.via(:ijs).by_shipment_number("SORD30059237").each do |ship|
+client.shipments.by_shipment_number("SORD30059237").each do |ship|
   puts ship.inspect
   #puts ship.to_xml
   puts ship.kg
