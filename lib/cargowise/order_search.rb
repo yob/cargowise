@@ -15,8 +15,7 @@ module Cargowise
           }
         }
       }
-      OrdersClient.endpoint(endpoint_hash) # probably not threadsafe. oops.
-      OrdersClient.get_order_list(ep.code, ep.user, ep.password, filter_hash)
+      OrdersClient.new.get_order_list(ep.uri, ep.code, ep.user, ep.password, filter_hash)
     end
 
     # find all orders with a ShipmentNumber that matches ref
@@ -30,8 +29,7 @@ module Cargowise
           }
         }
       }
-      OrdersClient.endpoint(endpoint_hash) # probably not threadsafe. oops.
-      OrdersClient.get_order_list(ep.code, ep.user, ep.password, filter_hash)
+      OrdersClient.new.get_order_list(ep.uri, ep.code, ep.user, ep.password, filter_hash)
     end
 
     # find all orders still marked as incomplete.
@@ -40,8 +38,7 @@ module Cargowise
       filter_hash = {
         "tns:Filter" => { "tns:OrderStatus" => "INC" }
         }
-      OrdersClient.endpoint(endpoint_hash) # probably not threadsafe. oops.
-      OrdersClient.get_order_list(ep.code, ep.user, ep.password, filter_hash)
+      OrdersClient.new.get_order_list(ep.uri, ep.code, ep.user, ep.password, filter_hash)
     end
 
   end

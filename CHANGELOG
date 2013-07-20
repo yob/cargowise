@@ -1,3 +1,9 @@
+v0.10.0 - 20th July 2013
+* switch from handsoap to savon for SOAP calls
+  * gives me more flexibility to control the SOAP requests and HTTP request
+    parameters. Useful for dealing with IIS 7.5 and poor SSL configs on servers
+  * no external API changes to this gem
+
 v0.9.1 - 13th February 2012
 * typo
 

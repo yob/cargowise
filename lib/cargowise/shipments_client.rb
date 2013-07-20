@@ -5,7 +5,7 @@ module Cargowise
   # SOAP client for retreiving shipment data. Not much to
   # see here, used by the Shipment resource class.
   #
-  class ShipmentsClient < AbstractClient # :nodoc:
+  class ShipmentsClient < AbstractClient
 
     # return an array of shipments. Each shipment should correspond to
     # a consolidated shipment from the freight company.
@@ -14,13 +14,30 @@ module Cargowise
     # XML fragment specifying the search criteria. See the WSDL documentation
     # for samples
     #
-    def get_shipments_list(company_code, username, pass, filter_hash)
-      soap_action  = 'http://www.edi.com.au/EnterpriseService/GetShipmentsList'
-      soap_headers = headers(company_code, username, pass)
-      response     = invoke('tns:GetShipmentsList', :soap_action => soap_action, :soap_header => soap_headers, :soap_body => filter_hash, :http_options => cw_http_options)
-      response.document.xpath("//tns:GetShipmentsListResult/tns:WebShipment", {"tns" => Cargowise::DEFAULT_NS}).map do |node|
+    def get_shipments_list(endpoint_uri, company_code, username, pass, filter_hash)
+      client = build_client(shipment_wsdl_path, endpoint_uri, company_code, username, pass)
+      response = client.call(:get_shipments_list, message: filter_hash)
+      response.xpath("//tns:GetShipmentsListResult/tns:WebShipment", {"tns" => Cargowise::DEFAULT_NS}).map do |node|
         Cargowise::Shipment.new(node)
       end
+    end
+
+    # test authentication, returns a string with your company name
+    # if successful
+    #
+    def hello(endpoint_uri, company_code, username, pass)
+      client = build_client(shipment_wsdl_path, endpoint_uri, company_code, username, pass)
+      response = client.call(:hello)
+      response.xpath("//tns:HelloResponse/tns:HelloResult/text()", {"tns" => Cargowise::DEFAULT_NS}).to_s
+    end
+
+    private
+
+    def shipment_wsdl_path
+      File.join(
+        File.dirname(__FILE__),
+        "shipment_wsdl.xml"
+      )
     end
 
   end
