@@ -94,23 +94,23 @@ module Cargowise
 
     # lookup full Cargowise::Order objects for each order on this shipment.
     #
-    # 'via' is a symbol indicating which API endpoint to lookup.
+    # client is a Cargowise::Client instance to look for the related shipments on
     #
-    def orders(via)
-      @orders ||= Cargowise::Order.via(via).by_shipment_number(self.number)
+    def orders(client)
+      @orders ||= client.orders.by_shipment_number(self.number)
     end
 
     # lookup related Cargowise::Shipment objects. These are usually "child" shipments
     # grouped under a parent. Think a consolidated pallet (the parent) with cartons from
     # multiple suppliers (the children).
     #
-    # 'via' is a symbol indicating which API endpoint to lookup.
+    # client is a Cargowise::Client instance to look for the related shipments on
     #
-    def related_shipments(via)
+    def related_shipments(client)
       @related ||= @consols.map { |consol|
         consol.master_bill
       }.compact.map { |master_bill|
-        Cargowise::Shipment.via(via).by_masterbill_number(master_bill)
+        client.shipments.by_masterbill_number(master_bill)
       }.flatten.select { |shipment|
         shipment.number != self.number
       }.compact
@@ -121,9 +121,11 @@ module Cargowise
     # This data isn't available via the API, so we need to screen scrape the
     # website to get it.
     #
-    def order_ref(via)
-      if tracker_login_uri(via)
-        @order_ref ||= html_page(via).search(".//span[@id='Ztextlabel1']/text()").to_s.strip || ""
+    # client is a Cargowise::Client instance to look for the related shipments on
+    #
+    def order_ref(client)
+      if client.base_uri
+        @order_ref ||= html_page(client).search(".//span[@id='Ztextlabel1']/text()").to_s.strip || ""
       else
         nil
       end
@@ -133,12 +135,11 @@ module Cargowise
 
     # retrieve a Mechanize::Page object that containts info on this shipment
     #
-    def html_page(via)
-      return nil unless tracker_login_uri(via)
+    def html_page(client)
+      return nil unless client.base_uri
 
       @html_page ||= begin
-        base_uri = tracker_login_uri(via)
-        login_uri = base_uri + "/Login/Login.aspx"
+        login_uri = client.base_uri + "/Login/Login.aspx"
         agent = Mechanize.new
         agent.agent.http.ssl_version = :TLSv1
         if File.file?(Cargowise::CA_CERT_FILE)
@@ -153,11 +154,5 @@ module Cargowise
       end
     end
 
-    # Find a shipment with documents attached so we can discover the
-    # web interface uri
-    #
-    def tracker_login_uri(via)
-      Shipment.endpoint(via).uri.to_s[/(.+)\/WebService.+/,1]
-    end
   end
 end

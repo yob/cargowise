@@ -44,6 +44,13 @@ module Cargowise
       response.xpath("//tns:HelloResponse/tns:HelloResult/text()", {"tns" => Cargowise::DEFAULT_NS}).to_s
     end
 
+    # Find the base URI for the web interface at this client
+    #
+    def base_uri
+      uri = @shipment_uri || @order_uri || ""
+      uri.to_s[/(.+)\/WebService.+/,1]
+    end
+
     private
 
     def orders_client
