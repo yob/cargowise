@@ -29,3 +29,7 @@ require 'cargowise/endpoint'
 require 'cargowise/abstract_search'
 require 'cargowise/order_search'
 require 'cargowise/shipment_search'
+
+# Make savon/httpi always use Net::HTTP for HTTP requests. It supports
+# forcing the connection to TLSv1 (needed for OHL)
+HTTPI.adapter = :net_http
