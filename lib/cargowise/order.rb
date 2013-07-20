@@ -1,5 +1,8 @@
 # coding: utf-8
 
+require 'cargowise/abstract_result'
+require 'cargowise/shipment'
+
 module Cargowise
 
   # A purchase order that is being shipped to from a supplier to

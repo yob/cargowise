@@ -2,12 +2,10 @@
 
 # stdlib
 require "bigdecimal"
-require "handsoap"
 
 # gems
 require 'mechanize'
 require 'andand'
-require 'savon'
 
 module Cargowise
   DEFAULT_NS = "http://www.edi.com.au/EnterpriseService/"
@@ -15,20 +13,7 @@ module Cargowise
 end
 
 # this lib
-require 'cargowise/abstract_client'
-require 'cargowise/orders_client'
-require 'cargowise/shipments_client'
-require 'cargowise/abstract_result'
-require 'cargowise/order'
-require 'cargowise/shipment'
-require 'cargowise/packing'
-require 'cargowise/consol'
-require 'cargowise/document'
-require 'cargowise/invoice'
-require 'cargowise/endpoint'
-require 'cargowise/abstract_search'
-require 'cargowise/order_search'
-require 'cargowise/shipment_search'
+require 'cargowise/client'
 
 # Make savon/httpi always use Net::HTTP for HTTP requests. It supports
 # forcing the connection to TLSv1 (needed for OHL)

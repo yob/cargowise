@@ -1,5 +1,7 @@
 # coding: utf-8
 
+require 'cargowise/abstract_result'
+
 module Cargowise
 
   # A document that is associated with a Shipment. Not built
