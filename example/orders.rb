@@ -18,7 +18,7 @@ Cargowise::Order.register(:ijs, :uri => uri,
                                 :user => username,
                                 :password => password)
 
-Cargowise::Order.via(:ijs).by_order_number("13/5/2010").each do |ord|
+Cargowise::Order.via(:ijs).by_order_number("9668").each do |ord|
   puts ord.inspect
   puts
 end

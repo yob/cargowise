@@ -7,14 +7,7 @@ module Cargowise
   #
   # Not much to see here, just common methods
   #
-  class AbstractClient < Handsoap::Service # :nodoc:
-    def on_create_document(doc)
-      doc.alias 'tns', Cargowise::DEFAULT_NS
-    end
-
-    def on_response_document(doc)
-      doc.add_namespace 'ns', Cargowise::DEFAULT_NS
-    end
+  class AbstractClient
 
     # test authentication, returns a string with your company name
     # if successful
@@ -28,23 +21,36 @@ module Cargowise
 
     private
 
-    def cw_http_options
-      if File.file?(Cargowise::CA_CERT_FILE)
-        {:trust_ca_file => Cargowise::CA_CERT_FILE}
-      else
-        {}
-      end
-    end
+    def build_client(wsdl_path, endpoint_uri, company_code, username, password)
+      Savon.client(
+        wsdl: wsdl_path,
+        endpoint: endpoint_uri,
 
-    def headers(company_code, username, pass)
-      {
-        "tns:WebTrackerSOAPHeader" => {
-          "tns:CompanyCode" => company_code,
-          "tns:UserName"    => username,
-          "tns:Password"    => pass
+        # Cargowise servers can be super slow to respond, this gives them time
+        # to have a smoko before responding to our queries.
+        read_timeout: 120,
+
+        # OHL uses cargowise and has a load balancer that freaks out if we use
+        # the OpenSSL 1.0.1 default of TLS1.1.
+        ssl_version: :TLSv1,
+
+        # savon 2.2.0 ignores the above ssl_version unless this is set to
+        # false. Annoying.
+        ssl_verify_mode: :none,
+
+        # turn off logging to keep me sane. Change this to true when developing
+        log: false,
+
+        # the cargowsie API requires auth details in the SOAP header of every
+        # request
+        soap_header: {
+          "tns:WebTrackerSOAPHeader" => {
+            "tns:CompanyCode" => company_code,
+            "tns:UserName" => username,
+            "tns:Password" => password
+          }
         }
-      }
+      )
     end
-
   end
 end
