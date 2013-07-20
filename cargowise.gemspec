@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name              = "cargowise"
-  s.version           = "0.10.0"
+  s.version           = "0.10.1"
   s.summary           = "Wrapper around entpriseEDI SOAP API by cargowise"
   s.description       = "Retrieve tracking and status information on your shipments from entpriseEDI"
   s.authors           = ["James Healy"]
@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.homepage          = "http://github.com/yob/cargowise"
   s.has_rdoc          = true
   s.rdoc_options      << "--title" << "Cargowise" << "--line-numbers"
-  s.files             = Dir.glob("lib/**/*.rb") + Dir.glob("examples/**/*.rb") + ["README.markdown", "CHANGELOG", "TODO", "COPYING", "MIT-LICENSE"]
+  s.files             = Dir.glob("lib/**/*.rb") + Dir.glob("lib/**/*.xml") + Dir.glob("examples/**/*.rb") + ["README.markdown", "CHANGELOG", "TODO", "COPYING", "MIT-LICENSE"]
   s.license           = "mit"
   s.add_dependency("andand")
   s.add_dependency("savon", "~>2.2.0")
