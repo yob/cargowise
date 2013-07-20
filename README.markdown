@@ -36,8 +36,8 @@ need to register the URI and authentication details for the company you want to 
 In a rails app the registration should be done in a file like
 config/initializers/cargowise.rb.
 
-If you deal with multiple companies running cargowise you can register each using
-different identifiers.
+If you deal with multiple companies running cargowise you should create a client
+instance per company.
 
 See the Finding API Endpoints section below for tips on finding the correct URI
 to register.
