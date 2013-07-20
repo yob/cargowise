@@ -62,6 +62,8 @@ module Cargowise
     def time_value(path)
       val = text_value(path)
       val.nil? ? nil : DateTime.parse(val)
+    rescue ArgumentError
+      return nil
     end
 
     def decimal_value(path)
