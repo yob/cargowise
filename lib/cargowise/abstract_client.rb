@@ -18,7 +18,7 @@ module Cargowise
 
         # Cargowise servers can be super slow to respond, this gives them time
         # to have a smoko before responding to our queries.
-        read_timeout: 120,
+        read_timeout: 240,
 
         # OHL uses cargowise and has a load balancer that freaks out if we use
         # the OpenSSL 1.0.1 default of TLS1.1.
