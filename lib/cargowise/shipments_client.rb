@@ -22,6 +22,15 @@ module Cargowise
       end
     end
 
+    # test authentication, returns a string with your company name
+    # if successful
+    #
+    def hello(endpoint_uri, company_code, username, pass)
+      client = build_client(shipment_wsdl_path, endpoint_uri, company_code, username, pass)
+      response = client.call(:hello)
+      response.xpath("//tns:HelloResponse/tns:HelloResult/text()", {"tns" => Cargowise::DEFAULT_NS}).to_s
+    end
+
     private
 
     def shipment_wsdl_path

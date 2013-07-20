@@ -9,16 +9,6 @@ module Cargowise
   #
   class AbstractClient
 
-    # test authentication, returns a string with your company name
-    # if successful
-    #
-    def hello(company_code, username, pass)
-      soap_action  = 'http://www.edi.com.au/EnterpriseService/Hello'
-      soap_headers = headers(company_code, username, pass)
-      response     = invoke('tns:Hello', :soap_action => soap_action, :soap_header => soap_headers, :http_options => cw_http_options)
-      response.document.xpath("//tns:HelloResponse/tns:HelloResult/text()", {"tns" => Cargowise::DEFAULT_NS}).to_s
-    end
-
     private
 
     def build_client(wsdl_path, endpoint_uri, company_code, username, password)
