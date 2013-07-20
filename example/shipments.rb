@@ -23,7 +23,7 @@ Cargowise::Shipment.register(:ijs, :uri => uri,
 #  puts
 #end
 
-Cargowise::Shipment.via(:ijs).by_shipment_number("SAAC00005301").each do |ship|
+Cargowise::Shipment.via(:ijs).by_shipment_number("SORD30059237").each do |ship|
   puts ship.inspect
   #puts ship.to_xml
   puts ship.kg
