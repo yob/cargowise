@@ -1,3 +1,9 @@
+v0.10.2 - 20th July 2013
+* increase the read timeout to allow for slow servers
+
+v0.10.1 - 20th July 2013
+* include the WSDLs in the distributed gem
+
 v0.10.0 - 20th July 2013
 * switch from handsoap to savon for SOAP calls
   * gives me more flexibility to control the SOAP requests and HTTP request
