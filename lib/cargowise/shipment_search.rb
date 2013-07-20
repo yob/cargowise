@@ -1,5 +1,7 @@
 # coding: utf-8
 
+require 'cargowise/shipment'
+
 module Cargowise
 
   class ShipmentSearch

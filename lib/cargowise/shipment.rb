@@ -1,5 +1,11 @@
 # coding: utf-8
 
+require 'cargowise/abstract_result'
+require 'cargowise/packing'
+require 'cargowise/consol'
+require 'cargowise/document'
+require 'cargowise/invoice'
+
 module Cargowise
 
   # A shipment that is currently on its way to you. Could take on a

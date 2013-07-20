@@ -1,5 +1,7 @@
 # coding: utf-8
 
+require 'cargowise/order'
+
 module Cargowise
 
   class OrderSearch
