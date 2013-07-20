@@ -29,7 +29,7 @@ module Cargowise
 
     def inspect
       str = "<#{self.class}: "
-      str << inspectable_vars.map { |v| "#{v.tr('@','')}: #{instance_variable_get(v)}" }.join(" ")
+      str << inspectable_vars.map { |v| "#{v.to_s.tr('@','')}: #{instance_variable_get(v)}" }.join(" ")
       str << ">"
       str
     end
@@ -41,7 +41,7 @@ module Cargowise
     end
 
     def inspectable_vars
-      instance_variables.select { |var| var != "@node"}
+      instance_variables.select { |var| var.to_s != "@node"}
     end
 
     def node_array(path)
