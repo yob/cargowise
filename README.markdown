@@ -27,15 +27,11 @@ either or both.
 Each company using the cargowise product hosts the server themselves, so you will
 need to register the URI and authentication details for the company you want to use.
 
-    Cargowise::Order.register(:ijs, :uri  => "http://visibility.ijsglobal.com/Tracker/WebService/OrderService.asmx",
-                                    :code => "company_code",
-                                    :user => "user@example.com",
-                                    :password => "secret")
-
-    Cargowise::Shipment.register(:ijs, :uri  => "http://visibility.ijsglobal.com/Tracker/WebService/ShipmentService.asmx",
-                                       :code => "company_code",
-                                       :user => "user@example.com",
-                                       :password => "secret")
+    client = Cargowise::Client.new(:order_uri => "http://visibility.ijsglobal.com/Tracker/WebService/OrderService.asmx",
+                                   :shipment_uri => "http://visibility.ijsglobal.com/Tracker/WebService/ShipmentService.asmx",
+                                   :code => "company_code",
+                                   :user => "user@example.com",
+                                   :password => "secret")
 
 In a rails app the registration should be done in a file like
 config/initializers/cargowise.rb.
@@ -55,11 +51,11 @@ the order.
 
 To find all orders with a certain order number:
 
-    Cargowise::Order.via(:ijs).by_order_number("123456")
+    client.orders.by_order_number("123456")
 
 To find all incomplete orders:
 
-    Cargowise::Order.via(:ijs).incomplete
+    client.orders.incomplete
 
 Cargowise::Shipment represents something being sent to you - like a carton,
 palet or truck load. It might be transported via air, sea, road or a combination.
@@ -67,15 +63,15 @@ palet or truck load. It might be transported via air, sea, road or a combination
 To find shipments by the shipment number (a reference number selected by your logistics
 company):
 
-    Cargowise::Shipment.via(:ijs).by_shipment_number("123456")
+    client.shipments.by_shipment_number("123456")
 
 To find undelivered shipments:
 
-    Cargowise::Shipment.via(:ijs).undelivered
+    client.shipments.undelivered
 
 To find shipments with activity in the past 14 days (or so):
 
-    Cargowise::Shipment.via(:ijs).with_recent_activity
+    client.shipments.with_recent_activity
 
 All Order and Shipment objects are read only, there are no write capabale
 methods exposed via the API. If you see errors, contact your logistics company.
