@@ -58,7 +58,7 @@ module Cargowise
           }
         }
       }
-      ShipmentsClient.new.get_shipments_list(er.uri, ep.code, ep.user, ep.password, filter_hash)
+      ShipmentsClient.new.get_shipments_list(ep.uri, ep.code, ep.user, ep.password, filter_hash)
     end
 
     private
